@@ -1,21 +1,18 @@
 #ifndef NBTREES_H
 #define NBTREES_H
-#include <stdio.h>
-#include <stdbool.h>
+#include "boolean.h"
+#define jml_maks 20
 
-typedef bool boolean;
 typedef char infotype;
-
-extern int jml_maks;
-
+typedef int address;
 typedef struct {
     infotype info;
-    int ps_fs;
-    int ps_nb;
-    int ps_pr;
-} Node;
+    address ps_fs;
+    address ps_nb;
+    address ps_pr;
+} nbtree;
 
-typedef Node Isi_Tree[100];
+typedef nbtree Isi_Tree[jml_maks+1];
 #define nil 0
 
 // ... deklarasi fungsi ...
@@ -28,12 +25,9 @@ boolean IsEmpty(Isi_Tree P);
 
 // Fungsi traversal pohon
 void PreOrder(Isi_Tree P);
-void PreOrderR(Isi_Tree P, int idx);
 void InOrder(Isi_Tree P);
-void InOrderR(Isi_Tree P, int idx);
 void PostOrder(Isi_Tree P);
-void PostOrderR(Isi_Tree P, int idx);
-void LevelOrder(Isi_Tree X, int jml_maks);
+void LevelOrder(Isi_Tree X, int Maks_node);
 
 // Fungsi untuk mencetak informasi pohon
 void PrintTree(Isi_Tree P);

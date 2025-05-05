@@ -1,17 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "nbts.h"
-
-int jml_maks = 10;
-Isi_Tree Tree;
+#include <unistd.h>
 
 int main() {
+    Isi_Tree Tree;
     int pilihan;
+    int userChoice;
     char cari, node1, node2;
-
     Create_tree(Tree, jml_maks);
 
-    do {
+    for(;;){
         printf("\nMenu Program:\n");
         printf("1. Traversal PreOrder\n");
         printf("2. Traversal InOrder\n");
@@ -26,63 +25,65 @@ int main() {
         printf("11. Exit\n");
         printf("Pilih Menu: ");
         scanf("%d", &pilihan);
-        getchar();  
 
-        switch (pilihan) {
-            case 1:
-                printf("PreOrder Traversal: ");
-                PreOrder(Tree);
-                break;
-            case 2:
-                printf("InOrder Traversal: ");
-                InOrder(Tree);
-                break;
-            case 3:
-                printf("PostOrder Traversal: ");
-                PostOrder(Tree);
-                break;
-            case 4:
-                printf("LevelOrder Traversal: ");
-                LevelOrder(Tree, jml_maks);
-                break;
-            case 5:
-                PrintTree(Tree);
-                break;
-            case 6:
-                printf("Masukkan node yang dicari: ");
-                scanf(" %c", &cari);
-                if (Search(Tree, cari)) {
-                    printf("Node %c ditemukan!\n", cari);
-                } else {
-                    printf("Node %c tidak ditemukan!\n", cari);
-                }
-                break;
-            case 7:
-                printf("Jumlah daun/leaf: %d\n", nbDaun(Tree));
-                break;
-            case 8:
-                printf("Masukkan node untuk dicari levelnya: ");
-                scanf(" %c", &cari);
-                printf("Level node %c: %d\n", cari, Level(Tree, cari));
-                break;
-            case 9:
-                printf("Kedalaman tree: %d\n", Depth(Tree));
-                break;
-            case 10:
-                printf("Masukkan node pertama: ");
-                scanf(" %c", &node1);
-                printf("Masukkan node kedua: ");
-                scanf(" %c", &node2);
-                printf("Level node %c: %d\n", node1, Level(Tree, node1));
-                printf("Level node %c: %d\n", node2, Level(Tree, node2));
-                break;
-            case 11:
-                printf("Keluar dari program.\n");
-                break;
-            default:
-                printf("Pilihan tidak valid.\n");
+        if(pilihan == 1){
+            printf("PreOrder Traversal: ");
+            PreOrder(Tree);
+            pilihan = 0;
+            printf("\n1. Kembali \nMasukkan pilihan : ");
+            scanf("%d", &userChoice);
+            break;
+        }else if(pilihan == 2){
+            printf("InOrder Traversal: ");
+            InOrder(Tree);
+            break;
+        }else if(pilihan == 3){
+            printf("PostOrder Traversal: ");
+            PostOrder(Tree);
+            break;
+        }else if(pilihan == 4){
+            printf("LevelOrder Traversal: ");
+            LevelOrder(Tree, jml_maks);
+            break;
+        }else if(pilihan == 5){
+            PrintTree(Tree);
+            break;
+        }else if(pilihan == 6){
+            printf("Masukkan node yang dicari: ");
+            scanf(" %c", &cari);
+            if (Search(Tree, cari)) {
+                printf("Node %c ditemukan!\n", cari);
+            } else {
+                printf("Node %c tidak ditemukan!\n", cari);
+            }
+            break;
+        }else if(pilihan == 7){
+            printf("Jumlah daun/leaf: %d\n", nbDaun(Tree));
+            break;
+        }else if(pilihan == 8){
+            printf("Masukkan node untuk dicari levelnya: ");
+            scanf(" %c", &cari);
+            printf("Level node %c: %d\n", cari, Level(Tree, cari));
+            break;
+        }else if(pilihan == 9){
+            printf("Kedalaman tree: %d\n", Depth(Tree));
+            break;
+        }else if(pilihan == 10){
+            printf("Masukkan node pertama: ");
+            scanf(" %c", &node1);
+            printf("Masukkan node kedua: ");
+            scanf(" %c", &node2);
+            printf("Level node %c: %d\n", node1, Level(Tree, node1));
+            printf("Level node %c: %d\n", node2, Level(Tree, node2));
+            break;
+        }else if(pilihan == 11){
+            printf("Keluar dari program.\n");
+
+        }else {
+            printf("pilihan tidak valid.....");
+
         }
-    } while (pilihan != 11);
-
+    }
+    
     return 0;
 }

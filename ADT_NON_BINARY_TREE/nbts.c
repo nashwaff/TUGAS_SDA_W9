@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include "nbts.h"
 
+
 void Create_tree(Isi_Tree X, int Jml_Node){
         int ascii = 65; // ASCII 'A'
         int i;
@@ -71,54 +72,77 @@ boolean IsEmpty(Isi_Tree P) {
     return P[1].info == '\0';
 }
 
-void PreOrderR(Isi_Tree P, int idx) {
-    if (idx != nil) {
-        printf("%c ", P[idx].info);
-        PreOrderR(P, P[idx].ps_fs);
-        PreOrderR(P, P[idx].ps_nb);
-    }
-}
-
 void PreOrder(Isi_Tree P) {
-    if (!IsEmpty(P)) {
-        PreOrderR(P, 1);
-        printf("\n");
+    int current = 1;       
+    boolean resmi = true;  
+    printf("%c ", P[current].info); 
+    while(current != nil){
+        if(P[current].ps_fs != nil && resmi){
+            current = P[current].ps_fs;
+            printf("%c ", P[current].info);
+        }else if(P[current].ps_nb != nil){
+            current = P[current].ps_nb;
+            printf("%c ", P[current].info);
+            resmi = true;
+        }else if(P[current].ps_nb == nil){
+            current = P[current].ps_pr;
+            resmi = false;
+        }
     }
-}
-
-void InOrderR(Isi_Tree P, int idx) {
-    if (idx != nil) {
-        InOrderR(P, P[idx].ps_fs);
-        printf("%c ", P[idx].info);
-        InOrderR(P, P[idx].ps_nb);
-    }
+    printf("\n");
 }
 
 void InOrder(Isi_Tree P) {
-    if (!IsEmpty(P)) {
-        InOrderR(P, 1);
-        printf("\n");
-    }
-}
-
-void PostOrderR(Isi_Tree P, int idx) {
-    if (idx != nil) {
-        PostOrderR(P, P[idx].ps_fs);
-        PostOrderR(P, P[idx].ps_nb);
-        printf("%c ", P[idx].info);
+    int current = 1;
+    boolean resmi = true;
+    while(current != nil){
+        while(P[current].ps_fs != nil && resmi){
+            current = P[current].ps_fs;
+        }
+        if(resmi){
+            printf("%c ", P[current].info);
+        }
+        if(P[P[current].ps_pr].ps_fs == current){
+            printf("%c ", P[P[current].ps_pr].info);
+        }
+        if(P[current].ps_nb != nil){
+            current = P[current].ps_nb;
+            resmi = true;
+        }else {
+            current = P[current].ps_pr;
+            resmi = false;
+        }
     }
 }
 
 void PostOrder(Isi_Tree P) {
-    if (!IsEmpty(P)) {
-        PostOrderR(P, 1);
-        printf("\n");
-    }
+    int current = 1; // berada di root
+    boolean resmi = true;
+    if(P[current].ps_fs != nil){
+        current = P[current].ps_fs; // turun 1 level ke first son
+        while(P[current].ps_pr != nil){
+            while(P[current].ps_fs != nil && resmi){ // turun ke first son
+                current = P[current].ps_fs;   
+            }
+            if(P[current].ps_fs == nil && resmi){
+                printf("%c ", P[current].info);
+            }
+            if(P[current].ps_nb != nil){
+                current = P[current].ps_nb;
+                resmi = true;
+            }else {
+                current = P[current].ps_pr;
+                printf("%c ", P[current].info);
+                resmi = false;
+            }
+        }
+        printf("\n"); 
+    } 
 }
 
-void LevelOrder(Isi_Tree X, int jml_maks) {
+void LevelOrder(Isi_Tree X, int Maks_node) {
     int i;
-    for (i = 1; i <= jml_maks; i++) {
+    for (i = 1; i <= Maks_node; i++) {
         if (X[i].info != '\0') {
             printf("%c ", X[i].info);
         }
