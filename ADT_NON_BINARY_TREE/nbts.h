@@ -1,7 +1,7 @@
 #ifndef NBTREES_H
 #define NBTREES_H
 #include "boolean.h"
-#define jml_maks 20
+#define jml_maks 10
 
 typedef char infotype;
 typedef int address;
